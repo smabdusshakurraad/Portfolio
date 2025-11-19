@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdus Sakur - PhD Applicant | Software Engineering & Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --bg-main: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary: #7c3aed;
+            --secondary: #a78bfa;
+            --accent: #c084fc;
+            --bg-main: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-main);
+            transition: var(--transition);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .profile-section {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .profile-image-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            animation: floatIn 1s ease-out;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            background: var(--bg-card);
+            padding: 1rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .theme-icon {
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background: var(--bg-card);
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .experience-item:hover, .education-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--accent);
+        }
+
+        .experience-item h3, .education-item h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .meta {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .experience-item ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .experience-item li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .research-interests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .research-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), transparent);
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
+        }
+
+        .research-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px var(--shadow);
+            border-left-color: var(--accent);
+        }
+
+        .research-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .research-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            background: var(--primary);
+            color: white;
+        }
+
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover a {
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        footer {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+            border-top: 2px solid var(--border);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-image-container {
+                width: 140px;
+                height: 140px;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+
+            section {
+                padding: 2rem;
+            }
+            
+            .skills, .research-interests, .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px var(--shadow);
+            z-index: 1000;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile-section">
+            <div class="profile-image-container">
+                <div class="profile-ring"></div>
+                <img src="https://i.imgur.com/dviV69R.jpeg" alt="Abdus Sakur" class="profile-image" id="profileImg">
+            </div>
+            <h1>Abdus Sakur</h1>
+            <p>Software Engineer | PhD Applicant </p>
+            <p>Backend and Architecture Focused | Research Enthusiast</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#research">Research Interests</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                    <span id="themeText">Dark</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>I’m Abdus Sakur — or “Raad (/Ra'ad/)” to my friends. I’m a Software Engineer from Bangladesh with nearly 4 years of professional experience and a passion for building intelligent, secure, and impactful technology. My journey began with curiosity about how simple ideas can solve real-life problems, which led me to pursue Computer Science at AIUB and later mentor students in programming and algorithms. Teaching taught me patience, clarity, and the joy of helping others succeed — lessons I carry into every project.</p>
+                <p>In the industry, I’ve designed systems that improve medical reporting accuracy, reduce supply chain losses, and leverage AI for virtual product visualization. These experiences strengthened my belief that technology should not only work but truly help people in meaningful ways.</p>
+                <p>Beyond work, I enjoy exploring nature, capturing moments through photography, and experimenting with new recipes in the kitchen. These hobbies keep me creative, grounded, and inspired.</p>
+                <p>I’m now preparing to pursue a PhD, focusing on AI, machine learning, and secure distributed systems. My goal is to contribute to research that pushes technological boundaries ethically and efficiently, while mentoring the next generation of learners and giving back to communities like the one I grew up in.</p>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3>Sr. Software Engineer - <a href="https://nitex.com/">NITEX</a></h3>
+                <p class="meta">📍BD | 📅 Jan 24 - Present</p>
+                <p><strong>Product Development for Fashion Supply Chain Automation</strong> </p>
+                <ul>
+                    <li>Integrated ActiveMQ for real-time data flow, improving sync reliability and reducing data inconsistencies by 40%.</li>
+                    <li>Built version-controlled measurement chart system with rollback and template copy, doubling garment tech team efficiency.</li>
+                    <li>Optimized large/bulk file uploads using Amazon S3 pre-signed URLs, cutting upload time by 70% and enhancing UX.</li>
+                    <li>Developed sample/product inventory tracker, reducing sample loss from 30% to 10% and improving traceability.</li>
+                    <li>Created a full-featured project management platform, boosting cross-team visibility and accountability.</li>
+                    <li>Automated TNA calendar creation from Excel, cutting manual work by 40% and improving planning efficiency.</li>
+                    <li>Built a design library for reusable assets, accelerating designer workflows and ensuring consistency.</li>
+                    <li>Integrated AI-powered virtual try-on, reducing sample creation and photoshoot costs by 60% and enhancing buyer visualization.</li>
+                    <li>Engineered dynamic filter generation using Spring Specifications and async processing, improving dashboard load time by 50%.</li>
+                    <li>Developed style presentation features with public sharing links, enhancing collaboration and buyer engagement.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Software Engineer - <a href="https://technonext.com/">TechnoNext</a></h3>
+                <p class="meta">📍BD | 📅 Jan 23 - Dec 23</p>
+                <p><strong>Medical Reporting System</strong> </p>
+                <ul>
+                    <li>Developed a medical reporting system with test result entry and document upload, improving data accessibility and reducing errors by 40%.</li>
+                    <li>Built a Dope Testing Module with secure file uploads and automated reporting, cutting reporting effort by 50%.</li>
+                    <li>Created a Breathalyzer Testing Module with real-time validations and accurate reporting, ensuring compliance with regulatory standards.</li>
+                    <li>Enhanced search and reporting across all modules, enabling customizable, real-time reports and reducing reporting turnaround time by 60%.</li>
+                </ul>
+
+                <h3>Jr. Software Engineer - <a href="https://technonext.com/">TechnoNext</a></h3>
+                <p class="meta">📍BD | 📅 Jan 22 - Dec 22</p>
+                <p><strong>Flight Operation System</strong> </p>
+                <ul>
+                    <li>Built a full Crew Management System supporting flight scheduling, FTDL/IATA rule validation, and journey log automation, improving scheduling compliance and efficiency by 30%.</li>
+                    <li>Secured the platform with JWT-based authentication and role-based access control, reducing unauthorized access by 95%.</li>
+                    <li>Centralized crew profile and document management using Javers with MongoDB for audit logging, cutting document lookup time by 70%.</li>
+                    <li>Developed interactive dashboards for schedules, crew info, vehicles, and training/licensing compliance, reducing manual tracking by 50%.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            
+            <div class="education-item">
+                <h3>Bachelor of Technology in Computer Science Engineering</h3>
+                <p class="meta">🎓 <strong><a href="https://www.aiub.edu/">American International University - Bangladesh (AIUB)</a> </strong>  | 📍 BD | 📅 2023</p>
+                <p><strong>CGPA:</strong> 3.58/4.00</p>
+                <p><strong>Relevant Coursework:</strong> Data Structures & Algorithms, Database Management Systems, Operating Systems, Computer Networks, Software Engineering, Artificial Intelligence, Virtual reality, Human Computer Interaction</p>
+                <p><strong>Projects:</strong> <strong> <a href="https://www.aiub.edu/e-toll-collection-management-system">E-Toll Collecting System V2 </a> <a href="https://github.com/smabdusshakurraad/E-Toll-CollectingSystemV2"> (Git) </a> , <a href="https://github.com/smabdusshakurraad/E-Toll-CollectingSystemV1"> E-Toll-Collecting System V1</a> </strong></p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills">
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">Spring MVC</span>
+                        <span class="tag">Spring Security</span>
+                        <span class="tag">Spring Data JPA</span>
+                        <span class="tag">Hibernate</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">C/C++</span>
+                        <span class="tag">c#</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Databases</h3>
+                    <div class="skill-tags">
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">Redis</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag">Jenkins</span>
+                        <span class="tag">Git</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Other Technologies</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Microservices</span>
+                        <span class="tag">REST APIs</span>
+                        <span class="tag">Kafka</span>
+                        <span class="tag">RabbitMQ</span>
+                        <span class="tag">JUnit</span>
+                        <span class="tag">Mockito</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2>Research Interests</h2>
+            <div class="research-interests">
+                <div class="research-card">
+                    <h3>Artificial Intelligence & Machine Learning</h3>
+                    <p>Explainable AI, Reinforcement Learning, Federated Learning, Edge AI, AI Ethics, Multimodal AI (vision + text + audio).</p>
+                </div>
+
+                <div class="research-card">
+                    <h3>Cybersecurity & Privacy</h3>
+                    <p>Post-quantum cryptography, Blockchain security, Secure multiparty computation, Privacy-preserving ML.</p>
+                </div>
+
+                <div class="research-card">
+                    <h3>Cloud Computing</h3>
+                    <p>Research in serverless architectures, cloud-native application design, and resource optimization in multi-cloud environments.</p>
+                </div>
+
+                <div class="research-card">
+                    <h3>Cybersecurity & Privacy</h3>
+                    <p>APost-quantum cryptography, Blockchain security, Secure multiparty computation, Privacy-preserving ML.</p>
+                </div>
+
+                <div class="research-card">
+                    <h3>Data Science for Social Good</h3>
+                    <p>Computational social science, AI policy, Data-driven economics, Urban analytics.</p>
+                </div>
+
+                <div class="research-card">
+                    <h3>Human–Computer Interaction (HCI)</h3>
+                    <p>Brain–Computer Interfaces (BCI), AR/VR interfaces, AI in education, cognitive computing.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; color: var(--text-secondary); line-height: 1.8;"><strong>Research Statement:</strong> My industry experience has revealed several challenges in building scalable, maintainable enterprise systems. I am eager to pursue doctoral research that addresses these real-world problems through rigorous academic inquiry, with the goal of contributing both theoretical insights and practical solutions to the field.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Information</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <div>
+                        <strong>Email:</strong><br>
+                        <a href="mailto:abdusshakurraad@gmail.com">abdusshakurraad@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <div>
+                        <strong>LinkedIn:</strong><br>
+                        <a href="https://www.linkedin.com/in/abdus-sakur/" target="_blank">linkedin.com/in/abdus-sakur/</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span>🐙</span>
+                    <div>
+                        <strong>GitHub:</strong><br>
+                        <a href="https://github.com/smabdusshakurraad" target="_blank">github.com/smabdusshakurraad</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <div>
+                        <strong>Location:</strong><br>
+                        Currently in BD
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="mailto:abdusshakurraad@gmail.com" class="btn">Get in Touch</a>
+                <a href="path/to/your/cv.pdf" class="btn" download>Download CV</a>
+            </div>
+        </section>
+    </div>
+
+    <div class="scroll-to-top" id="scrollTop">↑</div>
+
+    <footer>
+        <p>&copy; 2025 Abdus Sakur. All rights reserved.</p>
+        <p>Seeking PhD opportunities in Computer Science for Fall 2026</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        updateThemeButton(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const theme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateThemeButton(theme);
+        });
+
+        function updateThemeButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollTop = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Profile image upload (you can implement this)
+        const profileImg = document.getElementById('profileImg');
+        profileImg.addEventListener('click', () => {
+            alert('To change your profile picture:\n1. Save this HTML file\n2. Replace the image URL in the <img> tag\n3. Or upload your image to the same folder and update the src="your-image.jpg"');
+        });
+    </script>
+</body>
+</html>
