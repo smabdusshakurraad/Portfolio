@@ -507,6 +507,99 @@
         .scroll-to-top:hover {
             transform: translateY(-5px);
         }
+
+        /* Image Zoom Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-image {
+            width: auto;
+            height: auto;
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .profile-image-container:hover .zoom-hint {
+            opacity: 1;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        [data-theme="dark"] .zoom-hint {
+            background: rgba(30, 41, 59, 0.9);
+            color: var(--text-primary);
+        }       
     </style>
 </head>
 <body>
@@ -514,7 +607,7 @@
         <div class="profile-section">
             <div class="profile-image-container">
                 <div class="profile-ring"></div>
-                <img src="https://i.imgur.com/dviV69R.jpeg" alt="Abdus Sakur" class="profile-image" id="profileImg">
+                <img src="https://github.com/smabdusshakurraad/smabdusshakurraad.github.io/blob/main/1737724080085.jpg?raw=true" alt="Abdus Sakur" class="profile-image" id="profileImg">
             </div>
             <h1>Abdus Sakur</h1>
             <p>Software Engineer | PhD Applicant </p>
@@ -730,12 +823,20 @@
             </div>
             <div style="text-align: center; margin-top: 2rem;">
                 <a href="mailto:abdusshakurraad@gmail.com" class="btn">Get in Touch</a>
-                <a href="path/to/your/cv.pdf" class="btn" download>Download CV</a>
+                <a href="https://drive.google.com/file/d/15cob6CHHAD7Q6TPzndCC3YVc_Vp0loKR/view?usp=sharing" class="btn" download>Download CV</a>
             </div>
         </section>
     </div>
 
     <div class="scroll-to-top" id="scrollTop">↑</div>
+    
+    <!-- Image Zoom Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img src="" alt="Profile Picture" class="modal-image" id="modalImage">
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 Abdus Sakur. All rights reserved.</p>
@@ -797,10 +898,68 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Profile image upload (you can implement this)
-        const profileImg = document.getElementById('profileImg');
-        profileImg.addEventListener('click', () => {
-            alert('To change your profile picture:\n1. Save this HTML file\n2. Replace the image URL in the <img> tag\n3. Or upload your image to the same folder and update the src="your-image.jpg"');
+        // Profile Image Zoom - ADD THIS AT THE END
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileImg = document.getElementById('profileImg');
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalClose = document.getElementById('modalClose');
+        
+            // Check if all elements exist
+            if (!profileImg) {
+                console.error('profileImg not found');
+                return;
+            }
+            if (!imageModal) {
+                console.error('imageModal not found');
+                return;
+            }
+            if (!modalImage) {
+                console.error('modalImage not found');
+                return;
+            }
+            if (!modalClose) {
+                console.error('modalClose not found');
+                return;
+            }
+        
+            console.log('Zoom feature initialized!');
+        
+            // Open modal when clicking profile image
+            profileImg.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Profile image clicked!');
+                modalImage.src = this.src;
+                imageModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+        
+            // Close modal - X button
+            modalClose.onclick = function(e) {
+                e.stopPropagation();
+                console.log('Close button clicked!');
+                imageModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+        
+            // Close modal - click outside image
+            imageModal.onclick = function(e) {
+                if (e.target === imageModal) {
+                    console.log('Background clicked!');
+                    imageModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            };
+        
+            // Close modal - ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+                    console.log('ESC pressed!');
+                    imageModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
         });
     </script>
 </body>
